@@ -1,0 +1,20 @@
+{
+  "name": "new-bridge-living",
+  "version": "1.0.0",
+  "description": "New Bridge Living sober home website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx live-server .",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alecrj/bl.git"
+  },
+  "keywords": ["sober-living", "recovery", "tallahassee"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
