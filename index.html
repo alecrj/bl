@@ -4,495 +4,485 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Bridge Living - Your Bridge to Tomorrow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Playfair+Display:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js"></script>
     <style>
+        :root {
+            --blue: #2563eb;
+            --blue-dark: #1e40af;
+            --blue-light: #dbeafe;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --bg: #fafbfc;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #fafbfc;
-            color: #2c3e50;
-            overflow-x: hidden;
-            line-height: 1.6;
+            cursor: none;
         }
 
         html {
-            scroll-behavior: smooth;
+            font-size: 16px;
+            overscroll-behavior: none;
         }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--white);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.5;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            overscroll-behavior: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--blue);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--blue);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.hover {
+            width: 40px;
+            height: 40px;
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        a, button { cursor: none; }
 
         /* Navigation */
         .nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 20px 50px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
+            padding: 30px 5vw;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(52, 152, 219, 0.1);
-            opacity: 0;
-            transform: translateY(-100%);
+            mix-blend-mode: difference;
         }
 
         .logo {
-            font-size: 20px;
-            font-weight: 600;
-            color: #3498db;
-        }
-
-        .nav-contact {
-            background: transparent;
-            border: 1.5px solid #3498db;
-            padding: 10px 24px;
-            border-radius: 25px;
-            color: #3498db;
-            font-weight: 500;
             font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 400;
+            color: var(--blue);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
-        .nav-contact:hover {
-            background: #3498db;
-            color: white;
-            transform: translateY(-2px);
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            align-items: center;
         }
 
-        /* Hero Section */
+        .nav-link {
+            font-size: 13px;
+            color: var(--blue);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 0.6;
+        }
+
+        /* Hero Section - Full Journey */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #a8edea 100%);
             position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.1);
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+            background: var(--white);
         }
 
         .hero-content {
-            text-align: center;
-            z-index: 2;
-            max-width: 900px;
-            padding: 0 20px;
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .hero h1 {
-            font-size: clamp(3.5rem, 8vw, 6rem);
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(5rem, 15vw, 12rem);
+            font-weight: 300;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .line span {
+            display: inline-block;
+            transform: translateY(100%);
+        }
+
+        .hero-subtitle {
+            margin-top: 40px;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 300;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Intro Section - Split Screen */
+        .intro {
+            min-height: 100vh;
+            display: flex;
+            position: relative;
+        }
+
+        .intro-left {
+            width: 50%;
+            padding: 15vh 5vw;
+            display: flex;
+            align-items: center;
+            background: var(--bg);
+        }
+
+        .intro-right {
+            width: 50%;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            background: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .intro-content {
+            max-width: 500px;
+        }
+
+        .intro-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 300;
             margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(50px);
-            color: white;
-            letter-spacing: -2px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
-        .hero .subtitle {
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(30px);
-            font-weight: 200;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .hero .description {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            margin-bottom: 15px;
-            opacity: 0;
-            transform: translateY(20px);
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero .location {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            margin-bottom: 50px;
-            opacity: 0;
-            transform: translateY(20px);
-            color: rgba(255, 255, 255, 0.9);
+        .intro-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 25px;
             font-weight: 300;
         }
 
-        .cta-button {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            padding: 18px 40px;
-            border-radius: 50px;
-            color: white;
-            text-decoration: none;
-            font-weight: 400;
-            font-size: 16px;
-            backdrop-filter: blur(20px);
-            transition: all 0.4s ease;
+        .intro-number {
+            font-size: 20vw;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.1);
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Journey Section - Text Reveals */
+        .journey {
+            padding: 20vh 0;
+            background: var(--white);
+        }
+
+        .journey-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .journey-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            font-weight: 300;
+        }
+
+        .journey-text .line {
+            overflow: hidden;
+            margin-bottom: 0.2em;
+        }
+
+        .journey-text .word {
             display: inline-block;
-            opacity: 0;
-            transform: translateY(20px);
+            margin-right: 0.3em;
+            opacity: 0.2;
+            transform: translateY(50px);
         }
 
-        .cta-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Bridge Section */
-        .bridge-container {
+        /* Values Section - Horizontal Scroll */
+        .values {
             height: 400vh;
             position: relative;
         }
 
-        .bridge-section {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            overflow: hidden;
-        }
-
-        .bridge-svg {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .bridge-path {
-            fill: none;
-            stroke: #3498db;
-            stroke-width: 3;
-            stroke-dasharray: 2000;
-            stroke-dashoffset: 2000;
-            opacity: 0.8;
-        }
-
-        .bridge-supports {
-            fill: none;
-            stroke: #52c4e5;
-            stroke-width: 2;
-            stroke-dasharray: 500;
-            stroke-dashoffset: 500;
-            opacity: 0.6;
-        }
-
-        .bridge-text {
-            position: absolute;
-            text-align: center;
-            max-width: 700px;
-            padding: 0 20px;
-            z-index: 10;
-        }
-
-        .bridge-text h2 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 200;
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(30px);
-            color: #2c3e50;
-        }
-
-        .bridge-text p {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            opacity: 0;
-            transform: translateY(20px);
-            line-height: 1.7;
-            color: #5a6c7d;
-            font-weight: 300;
-        }
-
-        /* Horizontal Scroll Section */
-        .horizontal-section {
-            height: 450vh;
-        }
-
-        .horizontal-container {
+        .values-container {
             position: sticky;
             top: 0;
             height: 100vh;
             overflow: hidden;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #a8edea 100%);
+            background: var(--white);
         }
 
-        .horizontal-wrapper {
+        .values-track {
             display: flex;
-            height: 100%;
+            height: 100vh;
             width: 400vw;
         }
 
-        .horizontal-panel {
+        .value-panel {
             width: 100vw;
-            height: 100%;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 80px;
             position: relative;
-            flex-shrink: 0;
         }
 
-        .horizontal-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 1;
-        }
-
-        .panel-content {
-            max-width: 500px;
-            width: 100%;
+        .value-content {
             text-align: center;
+            max-width: 800px;
+            padding: 0 5vw;
+        }
+
+        .value-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40vw;
+            font-weight: 100;
+            color: rgba(37, 99, 235, 0.03);
+            font-family: 'Playfair Display', serif;
+            pointer-events: none;
+        }
+
+        .value-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 300;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
             position: relative;
             z-index: 2;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            padding: 60px 50px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .panel-content h3 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 500;
-            margin-bottom: 30px;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .panel-content p {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.95);
-            font-weight: 400;
-            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Experience Section */
-        .experience {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        .value-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            font-weight: 300;
             position: relative;
+            z-index: 2;
         }
 
-        .spacer {
-            height: 50vh;
+        /* Experience Section - Stacking Cards */
+        .experience {
+            padding: 20vh 0;
+            background: var(--bg);
         }
 
-        .spacer:last-child {
-            height: 0;
+        .experience-header {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 10vh;
         }
 
-        .accordions {
-            padding: 80px 50px;
+        .experience-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            opacity: 0;
+            transform: translateY(50px);
         }
 
-        .accordion {
-            background: white;
-            border-radius: 20px;
-            padding: 40px 40px 30px;
-            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.1);
-            border: 1px solid rgba(52, 152, 219, 0.1);
+        .cards-container {
+            position: relative;
+            height: 500vh;
+        }
+
+        .cards-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            position: absolute;
+            width: 90%;
+            max-width: 800px;
+            background: var(--white);
+            padding: 80px;
+            transform: scale(0.9);
+            opacity: 0;
+        }
+
+        .card-number {
+            font-size: 14px;
+            color: var(--blue);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* Vision Section - Full Screen Statement */
+        .vision {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--blue);
             position: relative;
             overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .accordion::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-        }
-
-        .accordion:nth-child(1)::before {
-            background: linear-gradient(90deg, #3498db, #52c4e5);
-        }
-
-        .accordion:nth-child(2)::before {
-            background: linear-gradient(90deg, #52c4e5, #a8edea);
-        }
-
-        .accordion:nth-child(3)::before {
-            background: linear-gradient(90deg, #a8edea, #fed6e3);
-        }
-
-        .accordion:nth-child(4)::before {
-            background: linear-gradient(90deg, #fed6e3, #667eea);
-        }
-
-        .accordion .title {
-            font-size: 32px;
-            color: #2c3e50;
-            font-weight: 500;
-            margin-bottom: 20px;
-            line-height: 1.3;
-        }
-
-        .accordion .text {
-            color: #5a6c7d;
-            line-height: 1.7;
-            font-weight: 300;
-            font-size: 16px;
-            padding-bottom: 20px;
-        }
-
-        /* Vision Section */
-        .vision {
-            padding: 120px 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            transform: translateY(0);
-            margin-top: -1px;
-        }
-
-        .vision::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(to bottom, rgba(248, 249, 250, 1) 0%, rgba(248, 249, 250, 0) 100%);
-            z-index: 1;
         }
 
         .vision-content {
-            max-width: 900px;
-            margin: 0 auto;
+            width: 90%;
+            max-width: 1200px;
             text-align: center;
-            opacity: 0;
-            transform: translateY(50px);
-            position: relative;
-            z-index: 2;
-        }
-
-        .vision h2 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            margin-bottom: 40px;
-            color: white;
-            font-weight: 200;
+            color: var(--white);
         }
 
         .vision-text {
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
-            margin-bottom: 30px;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 300;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
         }
 
-        /* Application Section */
+        .vision-text .line {
+            display: block;
+            overflow: hidden;
+            margin-bottom: 0.2em;
+        }
+
+        .vision-text .line span {
+            display: inline-block;
+            transform: translateY(100%);
+        }
+
+        /* Application Section - Minimal Form */
         .application {
-            padding: 80px 50px;
-            background: #f8f9fa;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 20vh 5vw;
+            background: var(--white);
         }
 
-        .app-content {
-            max-width: 900px;
+        .application-container {
+            max-width: 1200px;
             margin: 0 auto;
-            text-align: center;
-            width: 100%;
         }
 
-        .app-content h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(30px);
-            color: #2c3e50;
-            font-weight: 200;
+        .application-header {
+            margin-bottom: 10vh;
         }
 
-        .app-content p {
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(20px);
-            color: #5a6c7d;
+        .application-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            margin-bottom: 30px;
+        }
+
+        .application-header p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
             font-weight: 300;
         }
 
-        .application-form {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.1);
-            border: 1px solid rgba(52, 152, 219, 0.1);
-            opacity: 0;
-            transform: translateY(30px);
-            text-align: left;
-        }
-
-        .form-grid {
+        .form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 20px;
+            gap: 60px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            position: relative;
         }
 
-        .form-group.full-width {
+        .form-group.full {
             grid-column: 1 / -1;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 500;
-            color: #2c3e50;
-            font-size: 14px;
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            background: #fafbfc;
-            color: #2c3e50;
-            font-size: 15px;
+            padding: 20px 0;
+            border: none;
+            border-bottom: 1px solid #e2e8f0;
+            background: transparent;
+            font-size: 16px;
+            font-weight: 300;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            font-size: 16px;
+            color: var(--text-muted);
+            pointer-events: none;
             transition: all 0.3s ease;
         }
 
@@ -500,180 +490,222 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            border-bottom-color: var(--blue);
         }
 
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #adb5bd;
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:focus + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            top: -10px;
+            font-size: 12px;
+            color: var(--blue);
         }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .submit-button {
-            background: linear-gradient(135deg, #3498db 0%, #52c4e5 100%);
+        .submit-btn {
+            grid-column: 1 / -1;
+            margin-top: 60px;
+            padding: 20px 60px;
+            background: var(--blue);
+            color: var(--white);
             border: none;
-            padding: 16px 40px;
-            border-radius: 50px;
-            color: white;
-            font-weight: 500;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            margin: 20px auto 0;
-            display: block;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
         }
 
-        .submit-button:hover {
+        .submit-btn:hover {
+            background: var(--blue-dark);
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.3);
         }
 
-        /* Floating elements */
-        .floating-dots {
-            position: absolute;
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            pointer-events: none;
+            background: var(--white);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .dot {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
+        .loader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            overflow: hidden;
+        }
+
+        .loader-text span {
+            display: inline-block;
+            transform: translateY(100%);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .nav {
-                padding: 15px 20px;
+            .cursor, .cursor-dot { display: none; }
+            * { cursor: auto !important; }
+            
+            .intro {
+                flex-direction: column;
             }
             
-            .accordions, .vision, .application {
-                padding: 60px 20px;
+            .intro-left, .intro-right {
+                width: 100%;
             }
             
-            .form-grid {
+            .intro-right {
+                height: 50vh;
+                position: relative;
+            }
+            
+            .form {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 40px;
             }
             
-            .application-form {
-                padding: 30px 20px;
+            .card {
+                padding: 40px;
             }
-
-            .horizontal-panel {
-                padding: 0 20px;
+            
+            .card-title {
+                font-size: 2rem;
             }
-
-            .accordion {
-                padding: 25px 25px 20px;
-            }
-
-            .accordion .title {
-                font-size: 24px;
-            }
-
-            .accordion .text {
-                font-size: 15px;
-            }
-
-            .spacer {
-                height: 20vh;
-            }
-
-            .application {
-                min-height: auto;
-                padding: 60px 20px;
-            }
-
-            .app-content h2 {
-                font-size: clamp(1.8rem, 6vw, 2.5rem);
+            
+            .value-number {
+                font-size: 60vw;
             }
         }
 
-        /* Breathing animation for calm effect */
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.1); opacity: 1; }
+        /* Smooth Scroll */
+        html.lenis {
+            height: auto;
         }
 
-        .breathe {
-            animation: breathe 4s ease-in-out infinite;
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="loader-text">
+            <span>New</span> <span>Bridge</span> <span>Living</span>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
     <!-- Navigation -->
     <nav class="nav">
         <div class="logo">New Bridge Living</div>
-        <button class="nav-contact" onclick="document.querySelector('.application').scrollIntoView({behavior: 'smooth'})">
-            Apply Now
-        </button>
+        <div class="nav-menu">
+            <a href="#journey" class="nav-link">Journey</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#apply" class="nav-link">Apply</a>
+        </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="floating-dots"></div>
-        
         <div class="hero-content">
-            <h1>New Bridge Living</h1>
-            <p class="subtitle">Your Bridge to Tomorrow</p>
-            <p class="description">A thoughtful approach to recovery living where healing meets possibility</p>
-            <p class="location">Tallahassee, Florida</p>
-            <a href="#application" class="cta-button">Begin Your Journey</a>
+            <h1 class="hero-title">
+                <span class="line"><span>Your Bridge</span></span>
+                <span class="line"><span>to Tomorrow</span></span>
+            </h1>
+            <p class="hero-subtitle">A thoughtful approach to recovery living in Tallahassee, Florida</p>
         </div>
     </section>
 
-    <!-- Bridge Section -->
-    <section class="bridge-container">
-        <div class="bridge-section">
-            <svg class="bridge-svg" viewBox="0 0 1200 600">
-                <path class="bridge-path" d="M100 400 Q350 250 600 320 Q850 390 1100 280"/>
-                <path class="bridge-supports" d="M250 350 L250 420 M450 290 L450 360 M750 340 L750 410 M950 300 L950 370"/>
-                <circle cx="600" cy="320" r="8" fill="#3498db" opacity="0.8" class="breathe"/>
-            </svg>
-            
-            <div class="bridge-text">
-                <h2>Building Bridges</h2>
-                <p>Recovery is a journey from where you are to where you want to be. We're here to help you build that bridge with intention, support, and hope.</p>
+    <!-- Intro Section - Split Screen -->
+    <section class="intro">
+        <div class="intro-left">
+            <div class="intro-content">
+                <h2>Recovery is a journey from where you are to where you want to be.</h2>
+                <p>At New Bridge Living, we understand that transformation isn't just about leaving something behind—it's about stepping into who you're meant to become.</p>
+                <p>Our sober home in Tallahassee provides more than shelter. We offer a carefully designed environment where healing, growth, and genuine connection intersect.</p>
+                <p>Every aspect of our program is intentional, from the rhythms of daily life to the support systems we build together.</p>
+            </div>
+        </div>
+        <div class="intro-right">
+            <div class="intro-number">01</div>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="journey" id="journey">
+        <div class="journey-container">
+            <div class="journey-text">
+                <div class="line">
+                    <span class="word">Building</span>
+                    <span class="word">bridges</span>
+                </div>
+                <div class="line">
+                    <span class="word">requires</span>
+                    <span class="word">courage,</span>
+                </div>
+                <div class="line">
+                    <span class="word">commitment,</span>
+                </div>
+                <div class="line">
+                    <span class="word">and</span>
+                    <span class="word">community.</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Horizontal Scroll Section -->
-    <section class="horizontal-section">
-        <div class="horizontal-container">
-            <div class="horizontal-wrapper">
-                <div class="horizontal-panel">
-                    <div class="panel-content">
-                        <h3>Community</h3>
-                        <p>Surrounded by others who understand your journey, you'll find authentic connections that support lasting growth and healing.</p>
+    <!-- Values Section - Horizontal Scroll -->
+    <section class="values">
+        <div class="values-container">
+            <div class="values-track">
+                <div class="value-panel">
+                    <div class="value-number">01</div>
+                    <div class="value-content">
+                        <h3 class="value-title">Community</h3>
+                        <p class="value-text">Surrounded by others who understand your journey, you'll find authentic connections that support lasting growth and healing.</p>
                     </div>
                 </div>
-                <div class="horizontal-panel">
-                    <div class="panel-content">
-                        <h3>Growth</h3>
-                        <p>Every day offers new opportunities to develop skills, explore interests, and discover strengths you never knew you had.</p>
+                <div class="value-panel">
+                    <div class="value-number">02</div>
+                    <div class="value-content">
+                        <h3 class="value-title">Growth</h3>
+                        <p class="value-text">Every day offers new opportunities to develop skills, explore interests, and discover strengths you never knew you had.</p>
                     </div>
                 </div>
-                <div class="horizontal-panel">
-                    <div class="panel-content">
-                        <h3>Purpose</h3>
-                        <p>As you heal, you'll uncover your unique purpose and the meaningful contribution you're meant to make in the world.</p>
+                <div class="value-panel">
+                    <div class="value-number">03</div>
+                    <div class="value-content">
+                        <h3 class="value-title">Purpose</h3>
+                        <p class="value-text">As you heal, you'll uncover your unique purpose and the meaningful contribution you're meant to make in the world.</p>
                     </div>
                 </div>
-                <div class="horizontal-panel">
-                    <div class="panel-content">
-                        <h3>Future</h3>
-                        <p>With strong foundations in place, you'll step confidently into a future filled with possibility and hope.</p>
+                <div class="value-panel">
+                    <div class="value-number">04</div>
+                    <div class="value-content">
+                        <h3 class="value-title">Future</h3>
+                        <p class="value-text">With strong foundations in place, you'll step confidently into a future filled with possibility and hope.</p>
                     </div>
                 </div>
             </div>
@@ -681,324 +713,356 @@
     </section>
 
     <!-- Experience Section -->
-    <section class="experience">
-        <div class="spacer"></div>
-        <div class="accordions">
-            <div class="accordion">
-                <div class="title">Intentional Living</div>
-                <div class="text">Every aspect of our environment is designed to support your healing journey and personal transformation. From the layout of our spaces to the daily rhythms we create together, everything is purposeful.</div>
-            </div>
-            <div class="accordion">
-                <div class="title">Peer Support</div>
-                <div class="text">Connect with others who understand your journey, creating lasting friendships and mutual support. Our community becomes your extended family on the path to recovery.</div>
-            </div>
-            <div class="accordion">
-                <div class="title">Personal Development</div>
-                <div class="text">Individual and group experiences designed to help you discover your authentic self and potential. Explore your interests, develop new skills, and build unshakeable confidence.</div>
-            </div>
-            <div class="accordion">
-                <div class="title">Future Planning</div>
-                <div class="text">Work with our team to create a clear vision and actionable plan for your life beyond our program. We help you build the bridge to your new life, step by step.</div>
+    <section class="experience" id="experience">
+        <div class="experience-header">
+            <h2>The Experience</h2>
+        </div>
+        <div class="cards-container">
+            <div class="cards-sticky">
+                <div class="card" data-card="1">
+                    <div class="card-number">01 / LIVING</div>
+                    <h3 class="card-title">Intentional Living</h3>
+                    <p class="card-text">Every aspect of our environment is designed to support your healing journey. From the layout of our spaces to the daily rhythms we create together, everything serves your transformation.</p>
+                </div>
+                <div class="card" data-card="2">
+                    <div class="card-number">02 / SUPPORT</div>
+                    <h3 class="card-title">Peer Support</h3>
+                    <p class="card-text">Connect with others who understand your journey, creating lasting friendships and mutual support. Our community becomes your extended family on the path to recovery.</p>
+                </div>
+                <div class="card" data-card="3">
+                    <div class="card-number">03 / DEVELOPMENT</div>
+                    <h3 class="card-title">Personal Development</h3>
+                    <p class="card-text">Individual and group experiences designed to help you discover your authentic self. Explore your interests, develop new skills, and build unshakeable confidence.</p>
+                </div>
+                <div class="card" data-card="4">
+                    <div class="card-number">04 / PLANNING</div>
+                    <h3 class="card-title">Future Planning</h3>
+                    <p class="card-text">Work with our team to create a clear vision and actionable plan for your life beyond our program. We help you build the bridge to your new life, step by step.</p>
+                </div>
             </div>
         </div>
-        <div class="spacer"></div>
     </section>
 
     <!-- Vision Section -->
     <section class="vision">
         <div class="vision-content">
-            <h2>Our Vision</h2>
-            <p class="vision-text">Recovery is not just about leaving something behind—it's about stepping into who you're meant to become.</p>
-            <p class="vision-text">New Bridge Living is more than a sober home. It's a place of transformation, growth, and new beginnings.</p>
-            <p class="vision-text">Opening Fall 2025 in Tallahassee, we're creating a recovery experience that honors your journey and celebrates your potential.</p>
+            <div class="vision-text">
+                <span class="line"><span>New Bridge Living</span></span>
+                <span class="line"><span>is more than a sober home.</span></span>
+                <span class="line"><span>It's a place of transformation.</span></span>
+            </div>
         </div>
     </section>
 
     <!-- Application Section -->
-    <section class="application" id="application">
-        <div class="app-content">
-            <h2>Ready to Begin?</h2>
-            <p>Join our founding community. Applications now open for Fall 2025.</p>
-            
-            <form class="application-form">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="sobrietyLength">Length of Current Sobriety</label>
-                        <select id="sobrietyLength" name="sobrietyLength" required>
-                            <option value="">Select timeframe</option>
-                            <option value="0-30">0-30 days</option>
-                            <option value="30-90">30-90 days</option>
-                            <option value="90-180">3-6 months</option>
-                            <option value="180-365">6-12 months</option>
-                            <option value="365+">1+ years</option>
-                        </select>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="motivation">What draws you to New Bridge Living?</label>
-                        <textarea id="motivation" name="motivation" rows="3" placeholder="Share what interests you about our community..."></textarea>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="goals">What are you hoping to build in your life?</label>
-                        <textarea id="goals" name="goals" rows="3" placeholder="Tell us about your aspirations and dreams..."></textarea>
-                    </div>
+    <section class="application" id="apply">
+        <div class="application-container">
+            <div class="application-header">
+                <h2>Ready to Begin?</h2>
+                <p>Join our founding community. Opening Fall 2025.</p>
+            </div>
+            <form class="form">
+                <div class="form-group">
+                    <input type="text" placeholder=" " id="firstName" required>
+                    <label for="firstName">First Name</label>
                 </div>
-                
-                <button type="submit" class="submit-button">Submit Application</button>
+                <div class="form-group">
+                    <input type="text" placeholder=" " id="lastName" required>
+                    <label for="lastName">Last Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder=" " id="email" required>
+                    <label for="email">Email Address</label>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder=" " id="phone" required>
+                    <label for="phone">Phone Number</label>
+                </div>
+                <div class="form-group full">
+                    <select id="sobriety" required>
+                        <option value="">Select your current sobriety length</option>
+                        <option value="0-30">0-30 days</option>
+                        <option value="30-90">30-90 days</option>
+                        <option value="90-180">3-6 months</option>
+                        <option value="180-365">6-12 months</option>
+                        <option value="365+">1+ years</option>
+                    </select>
+                </div>
+                <div class="form-group full">
+                    <textarea placeholder=" " id="motivation" rows="4" required></textarea>
+                    <label for="motivation">What draws you to New Bridge Living?</label>
+                </div>
+                <button type="submit" class="submit-btn">Submit Application</button>
             </form>
         </div>
     </section>
 
     <script>
         // Register GSAP plugins
-        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+        gsap.registerPlugin(ScrollTrigger);
 
-        // Create floating dots
-        function createFloatingDots() {
-            const container = document.querySelector('.floating-dots');
-            for (let i = 0; i < 20; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot';
-                dot.style.left = Math.random() * 100 + '%';
-                dot.style.top = Math.random() * 100 + '%';
-                container.appendChild(dot);
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let dotX = 0, dotY = 0;
 
-                gsap.to(dot, {
-                    y: 'random(-50, 50)',
-                    x: 'random(-30, 30)',
-                    duration: 'random(8, 15)',
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'sine.inOut'
-                });
-            }
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            dotX += (mouseX - dotX) * 0.2;
+            dotY += (mouseY - dotY) * 0.2;
+            cursorDot.style.left = dotX + 'px';
+            cursorDot.style.top = dotY + 'px';
+
+            requestAnimationFrame(animateCursor);
         }
+        animateCursor();
 
-        createFloatingDots();
-
-        // Navigation entrance
-        gsap.to('.nav', {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            delay: 0.5,
-            ease: 'power2.out'
+        // Cursor hover effects
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
-        // Hero animations
-        const heroTl = gsap.timeline({ delay: 0.8 });
+        // Loading Animation
+        window.addEventListener('load', () => {
+            const loaderSpans = document.querySelectorAll('.loader-text span');
+            
+            gsap.timeline()
+                .to(loaderSpans, {
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: 'power3.out'
+                })
+                .to(loaderSpans, {
+                    y: -100,
+                    duration: 0.6,
+                    stagger: 0.05,
+                    ease: 'power3.in',
+                    delay: 0.5
+                })
+                .to('.loader', {
+                    opacity: 0,
+                    duration: 0.5,
+                    onComplete: () => {
+                        document.querySelector('.loader').style.display = 'none';
+                        initAnimations();
+                    }
+                });
+        });
 
-        heroTl
-            .to('.hero h1', {
-                opacity: 1,
-                y: 0,
-                duration: 1.5,
-                ease: 'power2.out'
-            })
-            .to('.hero .subtitle', {
-                opacity: 1,
+        function initAnimations() {
+            // Hero Title Animation
+            gsap.to('.hero-title .line span', {
                 y: 0,
                 duration: 1.2,
-                ease: 'power2.out'
-            }, '-=1')
-            .to('.hero .description', {
+                stagger: 0.2,
+                ease: 'power3.out',
+                delay: 0.3
+            });
+
+            gsap.to('.hero-subtitle', {
                 opacity: 1,
                 y: 0,
                 duration: 1,
-                ease: 'power2.out'
-            }, '-=0.8')
-            .to('.hero .location', {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: 'power2.out'
-            }, '-=0.6')
-            .to('.hero .cta-button', {
-                opacity: 1,
-                y: 0,
-                duration: 1.2,
-                ease: 'power2.out'
-            }, '-=0.4');
+                ease: 'power3.out',
+                delay: 1
+            });
 
-        // Bridge animation
-        const bridgeTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.bridge-container',
-                start: 'top top',
-                end: 'bottom bottom',
+            // Journey Text Reveal
+            const journeyWords = document.querySelectorAll('.journey-text .word');
+            
+            ScrollTrigger.create({
+                trigger: '.journey',
+                start: 'top center',
+                end: 'bottom center',
                 scrub: 1,
-                pin: '.bridge-section'
-            }
-        });
+                onUpdate: (self) => {
+                    journeyWords.forEach((word, i) => {
+                        const delay = i * 0.1;
+                        const progress = self.progress - delay;
+                        
+                        if (progress > 0) {
+                            gsap.to(word, {
+                                opacity: Math.min(1, progress * 3),
+                                y: 0,
+                                duration: 0.5,
+                                ease: 'power2.out'
+                            });
+                        }
+                    });
+                }
+            });
 
-        bridgeTl
-            .to('.bridge-path', {
-                strokeDashoffset: 0,
-                duration: 1,
-                ease: 'power2.inOut'
-            })
-            .to('.bridge-supports', {
-                strokeDashoffset: 0,
-                duration: 0.8,
-                stagger: 0.1
-            }, 0.3)
-            .to('.bridge-text h2', {
-                opacity: 1,
-                y: 0,
-                duration: 0.6
-            }, 0.5)
-            .to('.bridge-text p', {
-                opacity: 1,
-                y: 0,
-                duration: 0.6
-            }, 0.7);
-
-        // Horizontal scroll animation
-        const horizontalTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.horizontal-section',
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: 1,
-                pin: '.horizontal-container'
-            }
-        });
-
-        horizontalTl.to('.horizontal-wrapper', {
-            x: '-300vw',
-            duration: 1,
-            ease: 'none'
-        });
-
-        // Experience section accordion animation (from CodePen)
-        const accordionTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.accordions',
-                pin: true,
-                start: 'top top',
-                end: '+=150%',
-                scrub: 1,
-                ease: 'linear',
-            }
-        });
-
-        // Add delay so user can read content first, then start stacking
-        accordionTl.to({}, { duration: 0.3 })
-        .to('.accordion .text', {
-            height: 0,
-            paddingBottom: 0,
-            opacity: 0,
-            stagger: 0.7,
-        })
-        .to('.accordion', {
-            marginBottom: -15,
-            stagger: 0.7,
-        }, '<');
-
-        // Vision section smooth entrance
-        gsap.to('.vision-content', {
-            opacity: 1,
-            y: 0,
-            duration: 1.5,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: '.vision',
-                start: 'top 85%',
-                end: 'top 50%',
-                scrub: 1,
-            }
-        });
-
-        // Smooth transition from accordion to vision
-        gsap.to('.vision', {
-            y: 0,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.vision',
-                start: 'top bottom',
-                end: 'top top',
-                scrub: 1,
-            }
-        });
-
-        // Application section
-        const appTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.application',
-                start: 'top 70%'
-            }
-        });
-
-        appTl
-            .to('.app-content h2', {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: 'power2.out'
-            })
-            .to('.app-content p', {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: 'power2.out'
-            }, '-=0.5')
-            .to('.application-form', {
-                opacity: 1,
-                y: 0,
-                duration: 1.2,
-                ease: 'power2.out'
-            }, '-=0.3');
-
-        // Gentle parallax effect
-        gsap.utils.toArray('.dot').forEach(dot => {
-            gsap.to(dot, {
-                yPercent: -30,
+            // Horizontal Scroll for Values
+            const valuesTrack = document.querySelector('.values-track');
+            
+            gsap.to(valuesTrack, {
+                x: '-300vw',
                 ease: 'none',
                 scrollTrigger: {
-                    trigger: dot,
-                    start: 'top bottom',
+                    trigger: '.values',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1,
+                    pin: '.values-container'
+                }
+            });
+
+            // Parallax for value numbers
+            gsap.utils.toArray('.value-number').forEach((num, i) => {
+                gsap.to(num, {
+                    x: -100 * (i + 1),
+                    scrollTrigger: {
+                        trigger: '.values',
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 2
+                    }
+                });
+            });
+
+            // Experience Cards Stacking
+            const cards = gsap.utils.toArray('.card');
+            
+            cards.forEach((card, i) => {
+                ScrollTrigger.create({
+                    trigger: '.cards-container',
+                    start: `${i * 25}% top`,
+                    end: `${(i + 1) * 25}% top`,
+                    pin: '.cards-sticky',
+                    pinSpacing: false,
+                    onEnter: () => {
+                        gsap.to(card, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.5,
+                            ease: 'power2.out'
+                        });
+                        
+                        // Fade out previous cards
+                        if (i > 0) {
+                            gsap.to(cards[i - 1], {
+                                opacity: 0.3,
+                                scale: 0.95,
+                                duration: 0.5
+                            });
+                        }
+                    },
+                    onLeaveBack: () => {
+                        if (i > 0) {
+                            gsap.to(cards[i - 1], {
+                                opacity: 1,
+                                scale: 1,
+                                duration: 0.5
+                            });
+                        }
+                        gsap.to(card, {
+                            opacity: 0,
+                            scale: 0.9,
+                            duration: 0.5
+                        });
+                    }
+                });
+            });
+
+            // Experience Header
+            gsap.to('.experience-header h2', {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.experience-header',
+                    start: 'top 80%'
+                }
+            });
+
+            // Vision Text Animation
+            ScrollTrigger.create({
+                trigger: '.vision',
+                start: 'top center',
+                onEnter: () => {
+                    gsap.to('.vision-text .line span', {
+                        y: 0,
+                        duration: 1,
+                        stagger: 0.2,
+                        ease: 'power3.out'
+                    });
+                }
+            });
+
+            // Intro Parallax
+            gsap.to('.intro-number', {
+                y: -100,
+                scrollTrigger: {
+                    trigger: '.intro',
+                    start: 'top top',
                     end: 'bottom top',
                     scrub: 1
                 }
             });
-        });
 
-        // Form submission
-        document.querySelector('.application-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            gsap.to('.submit-button', {
-                scale: 0.98,
-                duration: 0.1,
-                yoyo: true,
-                repeat: 1,
-                onComplete: () => {
-                    alert('Thank you for your application! We\'ll be in touch soon about Fall 2025 openings.');
+            // Form Animation
+            ScrollTrigger.create({
+                trigger: '.application',
+                start: 'top center',
+                onEnter: () => {
+                    gsap.from('.form-group', {
+                        opacity: 0,
+                        y: 30,
+                        duration: 0.8,
+                        stagger: 0.1,
+                        ease: 'power2.out'
+                    });
                 }
             });
-        });
 
-        // Smooth scroll for CTA
-        document.querySelector('.cta-button').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector('.application').scrollIntoView({
-                behavior: 'smooth'
+            // Smooth scroll for navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
             });
+
+            // Form submission
+            document.querySelector('.form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = document.querySelector('.submit-btn');
+                btn.textContent = 'SENDING...';
+                
+                setTimeout(() => {
+                    btn.textContent = 'THANK YOU';
+                    btn.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        alert('Thank you for your application. We\'ll be in touch soon.');
+                        e.target.reset();
+                        btn.textContent = 'SUBMIT APPLICATION';
+                        btn.style.background = '';
+                    }, 1500);
+                }, 2000);
+            });
+        }
+
+        // Refresh ScrollTrigger on resize
+        window.addEventListener('resize', () => {
+            ScrollTrigger.refresh();
         });
     </script>
 </body>
