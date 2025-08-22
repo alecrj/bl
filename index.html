@@ -428,16 +428,22 @@
 
         /* Vision Section - Full Screen Statement */
         .vision {
+            height: 400vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vision-sticky {
+            position: sticky;
+            top: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--blue);
-            position: relative;
-            overflow: hidden;
         }
 
-        .vision::before {
+        .vision-sticky::before {
             content: '';
             position: absolute;
             width: 200%;
@@ -484,10 +490,51 @@
             transform: translateY(100%);
         }
 
+        .transformation-word {
+            position: relative;
+            display: inline;
+            vertical-align: baseline;
+        }
+
+        .transformation-word::before {
+            content: 'transformation';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+            transition: clip-path 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            white-space: nowrap;
+        }
+
+        /* Fallback for browsers without clip-path support */
+        @supports not (clip-path: polygon(0 0, 0 0, 0 100%, 0 100%)) {
+            .transformation-word::before {
+                width: 0%;
+                clip-path: none;
+                transition: width 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                overflow: hidden;
+            }
+            
+            .transformation-word.fill::before {
+                width: 100%;
+            }
+        }
+
+        .transformation-word.fill::before {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
         /* Application Section - Minimal Form */
         .application {
             padding: 20vh 5vw;
-            background: var(--white);
+            background: #ffffff;
+            min-height: 100vh;
         }
 
         .application-container {
@@ -506,11 +553,12 @@
             letter-spacing: -0.02em;
             margin-bottom: 30px;
             font-style: italic;
+            color: #0f172a !important;
         }
 
         .application-header p {
             font-size: 1.25rem;
-            color: var(--text-muted);
+            color: #64748b !important;
             font-weight: 400;
             font-family: 'Inter', sans-serif;
         }
@@ -535,12 +583,21 @@
             width: 100%;
             padding: 20px 0;
             border: none;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 2px solid #cbd5e1 !important;
             background: transparent;
             font-size: 16px;
             font-weight: 400;
             font-family: 'Inter', sans-serif;
             transition: border-color 0.3s ease;
+            resize: vertical;
+            color: #0f172a !important;
+        }
+
+        .form-group textarea {
+            line-height: 1.5;
+            min-height: 60px;
+            overflow: hidden;
+            resize: vertical;
         }
 
         .form-group label {
@@ -548,7 +605,7 @@
             top: 20px;
             left: 0;
             font-size: 16px;
-            color: var(--text-muted);
+            color: #64748b !important;
             pointer-events: none;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
@@ -559,16 +616,18 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-bottom-color: var(--blue);
+            border-bottom-color: #2563eb !important;
         }
 
         .form-group input:focus + label,
         .form-group input:not(:placeholder-shown) + label,
-        .form-group textarea:focus + label,
-        .form-group textarea:not(:placeholder-shown) + label {
+        .form-group input:valid + label,
+        .form-group select:focus + label,
+        .form-group select:not([value=""]) + label,
+        .form-group select:valid + label {
             top: -10px;
             font-size: 12px;
-            color: var(--blue);
+            color: #2563eb !important;
             letter-spacing: 0.5px;
             font-weight: 500;
         }
@@ -577,8 +636,8 @@
             grid-column: 1 / -1;
             margin-top: 60px;
             padding: 20px 60px;
-            background: var(--blue);
-            color: var(--white);
+            background: #2563eb !important;
+            color: #ffffff !important;
             border: none;
             font-size: 13px;
             letter-spacing: 1.5px;
@@ -586,10 +645,11 @@
             transition: all 0.3s ease;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
+            cursor: pointer;
         }
 
         .submit-btn:hover {
-            background: var(--blue-dark);
+            background: #1e40af !important;
             transform: translateY(-2px);
         }
 
@@ -621,6 +681,52 @@
             transform: translateY(100%);
         }
 
+        /* Text Highlighting Animation */
+        .text-highlight {
+            position: relative;
+            display: inline;
+        }
+
+        .text-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #fef08a 0%, #facc15 100%);
+            transform: scaleX(0);
+            transform-origin: left center;
+            z-index: -1;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .text-highlight.active::before {
+            transform: scaleX(1);
+        }
+
+        .text-highlight-underline {
+            position: relative;
+            display: inline;
+        }
+
+        .text-highlight-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #fef08a 0%, #facc15 100%);
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .text-highlight-underline.active::after {
+            transform: scaleX(1);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .cursor, .cursor-dot { display: none; }
@@ -650,6 +756,10 @@
             .journey-text,
             .vision-text {
                 line-height: 1.1;
+            }
+
+            .vision {
+                height: 300vh;
             }
         }
 
@@ -711,7 +821,7 @@
             
             <div class="bridge-text">
                 <h2>Building Bridges</h2>
-                <p>Recovery is a journey from where you are to where you want to be. We're here to help you build that bridge with intention, support, and hope.</p>
+                <p>Recovery is a journey from where you are to <span class="text-highlight" data-text="where you want to be"><span class="highlight-bg"></span>where you want to be</span>. We're here to help you build that bridge with <span class="text-highlight" data-text="intention, support, and hope"><span class="highlight-bg"></span>intention, support, and hope</span>.</p>
             </div>
         </div>
     </section>
@@ -808,11 +918,13 @@
 
     <!-- Vision Section -->
     <section class="vision">
-        <div class="vision-content">
-            <div class="vision-text">
-                <span class="line"><span>New Bridge Living</span></span>
-                <span class="line"><span>is more than a sober home.</span></span>
-                <span class="line"><span>It's a place of transformation.</span></span>
+        <div class="vision-sticky">
+            <div class="vision-content">
+                <div class="vision-text">
+                    <span class="line"><span>New Bridge Living</span></span>
+                    <span class="line"><span>is more than a sober home.</span></span>
+                    <span class="line"><span>It's a place of <span class="transformation-word">transformation</span>.</span></span>
+                </div>
             </div>
         </div>
     </section>
@@ -824,7 +936,7 @@
                 <h2>Ready to Begin?</h2>
                 <p>Join our founding community. Opening Fall 2025.</p>
             </div>
-            <form class="form">
+            <form class="form" id="application-form">
                 <div class="form-group">
                     <input type="text" placeholder=" " id="firstName" required>
                     <label for="firstName">First Name</label>
@@ -852,8 +964,8 @@
                     </select>
                 </div>
                 <div class="form-group full">
-                    <textarea placeholder=" " id="motivation" rows="4" required></textarea>
-                    <label for="motivation">What draws you to New Bridge Living?</label>
+                    <textarea id="dreams" rows="4" required></textarea>
+                    <label for="dreams">What are your dreams for your future?</label>
                 </div>
                 <button type="submit" class="submit-btn">Submit Application</button>
             </form>
@@ -1085,18 +1197,52 @@
                 }
             });
 
-            // Vision Text Animation
-            ScrollTrigger.create({
-                trigger: '.vision',
-                start: 'top center',
-                onEnter: () => {
-                    gsap.to('.vision-text .line span', {
-                        y: 0,
-                        duration: 1,
-                        stagger: 0.2,
-                        ease: 'power3.out'
-                    });
+            // Vision Text Animation with Pinning and Transformation Fill
+            const visionTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.vision',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1,
+                    pin: '.vision-sticky',
+                    anticipatePin: 1
                 }
+            });
+
+            visionTl
+                .to('.vision-text .line span', {
+                    y: 0,
+                    duration: 0.2,
+                    stagger: 0.05,
+                    ease: 'power3.out'
+                })
+                .to({}, { duration: 0.1 }) // Brief pause
+                .to('.transformation-word', {
+                    duration: 0.6,
+                    ease: 'none',
+                    onStart: () => {
+                        document.querySelector('.transformation-word').classList.add('fill');
+                    }
+                })
+                .to({}, { duration: 0.8 }); // Much longer hold to ensure full animation and show period
+
+            // Text Highlighting on Scroll
+            const highlights = gsap.utils.toArray('.text-highlight');
+            
+            highlights.forEach((highlight) => {
+                ScrollTrigger.create({
+                    trigger: highlight,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        // Add a slight delay for more natural feel
+                        gsap.delayedCall(0.3, () => {
+                            highlight.classList.add('active');
+                        });
+                    },
+                    onLeaveBack: () => {
+                        highlight.classList.remove('active');
+                    }
+                });
             });
 
             // Form Animation
@@ -1125,9 +1271,83 @@
                 });
             });
 
+            // Handle textarea label behavior
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                // Add placeholder functionality
+                if (textarea.id === 'dreams') {
+                    const placeholderText = 'Share your vision for your future - career goals, relationships, experiences you want to have, or the life you are working toward building...';
+                    
+                    const showPlaceholder = () => {
+                        if (!textarea.value && textarea !== document.activeElement) {
+                            textarea.style.color = '#94a3b8';
+                            textarea.style.fontStyle = 'italic';
+                            textarea.style.fontSize = '14px';
+                            textarea.style.fontFamily = 'Inter, sans-serif';
+                            textarea.style.fontWeight = '400';
+                            textarea.value = placeholderText;
+                        }
+                    };
+
+                    const hidePlaceholder = () => {
+                        if (textarea.value === placeholderText) {
+                            textarea.value = '';
+                            textarea.style.color = '';
+                            textarea.style.fontStyle = '';
+                            textarea.style.fontSize = '';
+                            textarea.style.fontFamily = '';
+                            textarea.style.fontWeight = '';
+                        }
+                    };
+
+                    textarea.addEventListener('focus', hidePlaceholder);
+                    textarea.addEventListener('blur', showPlaceholder);
+                    
+                    // Initialize
+                    showPlaceholder();
+                }
+                
+                const updateLabel = () => {
+                    const label = textarea.nextElementSibling;
+                    label.style.transition = 'all 0.3s ease';
+                    
+                    const hasValue = textarea.value.length > 0 && 
+                                   textarea.value !== 'Share your vision for your future - career goals, relationships, experiences you want to have, or the life you are working toward building...';
+                    
+                    if (hasValue || textarea === document.activeElement) {
+                        label.style.top = '-10px';
+                        label.style.fontSize = '12px';
+                        label.style.color = 'var(--blue)';
+                        label.style.fontWeight = '500';
+                        label.style.letterSpacing = '0.5px';
+                    } else {
+                        label.style.top = '20px';
+                        label.style.fontSize = '16px';
+                        label.style.color = 'var(--text-muted)';
+                        label.style.fontWeight = '400';
+                        label.style.letterSpacing = '';
+                    }
+                };
+
+                textarea.addEventListener('input', updateLabel);
+                textarea.addEventListener('focus', updateLabel);
+                textarea.addEventListener('blur', updateLabel);
+                
+                // Initial check
+                updateLabel();
+            });
+
             // Form submission
-            document.querySelector('.form').addEventListener('submit', (e) => {
+            document.querySelector('#application-form').addEventListener('submit', (e) => {
                 e.preventDefault();
+                
+                // Clear placeholder if it's still there
+                const dreamsTextarea = document.getElementById('dreams');
+                const placeholderText = 'Share your vision for your future - career goals, relationships, experiences you want to have, or the life you are working toward building...';
+                if (dreamsTextarea.value === placeholderText) {
+                    dreamsTextarea.value = '';
+                }
+                
                 const btn = document.querySelector('.submit-btn');
                 btn.textContent = 'SENDING...';
                 
@@ -1136,8 +1356,19 @@
                     btn.style.background = '#10b981';
                     
                     setTimeout(() => {
-                        alert('Thank you for your application. We\'ll be in touch soon.');
+                        alert('Thank you for your application. We will be in touch soon.');
                         e.target.reset();
+                        
+                        // Re-initialize placeholder
+                        if (dreamsTextarea.value === '') {
+                            dreamsTextarea.style.color = '#94a3b8';
+                            dreamsTextarea.style.fontStyle = 'italic';
+                            dreamsTextarea.style.fontSize = '14px';
+                            dreamsTextarea.style.fontFamily = 'Inter, sans-serif';
+                            dreamsTextarea.style.fontWeight = '400';
+                            dreamsTextarea.value = placeholderText;
+                        }
+                        
                         btn.textContent = 'SUBMIT APPLICATION';
                         btn.style.background = '';
                     }, 1500);
