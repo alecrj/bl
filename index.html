@@ -19,7 +19,6 @@
             --text-muted: #64748b;
             --white: #ffffff;
             --bg: #fafbfc;
-            --border: #cbd5e1;
         }
 
         * {
@@ -44,13 +43,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overscroll-behavior: none;
-        }
-
-        body.loading {
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-            height: 100%;
         }
 
         /* Custom Cursor */
@@ -86,7 +78,7 @@
 
         a, button { cursor: none; }
 
-        /* Navigation - with scroll fade effect */
+        /* Navigation */
         .nav {
             position: fixed;
             top: 0;
@@ -97,13 +89,6 @@
             justify-content: space-between;
             align-items: center;
             mix-blend-mode: difference;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .nav.hidden {
-            opacity: 0;
-            transform: translateY(-20px);
-            pointer-events: none;
         }
 
         .logo {
@@ -133,26 +118,6 @@
 
         .nav-link:hover {
             opacity: 0.6;
-        }
-
-        /* Scroll Progress Bar */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: rgba(37, 99, 235, 0.1);
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        .scroll-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--blue) 0%, var(--blue-dark) 100%);
-            width: 0%;
-            transition: width 0.1s ease-out;
-            box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
         }
 
         /* Hero Section */
@@ -565,10 +530,10 @@
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
 
-        /* Application Section - Completely Fixed Form */
+        /* Application Section - Minimal Form */
         .application {
             padding: 20vh 5vw;
-            background: var(--white);
+            background: #ffffff;
             min-height: 100vh;
         }
 
@@ -578,7 +543,7 @@
         }
 
         .application-header {
-            margin-bottom: 8vh;
+            margin-bottom: 10vh;
         }
 
         .application-header h2 {
@@ -588,177 +553,106 @@
             letter-spacing: -0.02em;
             margin-bottom: 30px;
             font-style: italic;
-            color: var(--text);
+            color: #0f172a !important;
         }
 
         .application-header p {
             font-size: 1.25rem;
-            color: var(--text-muted);
+            color: #64748b !important;
             font-weight: 400;
             font-family: 'Inter', sans-serif;
         }
 
-        /* Form Grid */
-        .application-form {
+        .form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px 80px;
+            gap: 60px;
         }
 
-        /* Form Field Container */
-        .field {
+        .form-group {
             position: relative;
-            padding: 0;
-            margin: 0;
         }
 
-        .field.full-width {
+        .form-group.full {
             grid-column: 1 / -1;
         }
 
-        /* Input Styles */
-        .field-input {
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            background: transparent;
+            padding: 20px 0;
             border: none;
-            border-bottom: 2px solid var(--border);
-            padding: 30px 0 12px 0;
+            border-bottom: 2px solid #cbd5e1 !important;
+            background: transparent;
             font-size: 16px;
+            font-weight: 400;
             font-family: 'Inter', sans-serif;
-            color: var(--text);
-            outline: none;
             transition: border-color 0.3s ease;
-        }
-
-        .field-input:focus {
-            border-bottom-color: var(--blue);
-        }
-
-        /* Select Styles */
-        .field-select {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid var(--border);
-            padding: 30px 20px 12px 0;
-            font-size: 16px;
-            font-family: 'Inter', sans-serif;
-            color: var(--text);
-            outline: none;
-            appearance: none;
-            cursor: pointer;
-            transition: border-color 0.3s ease;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0 center;
-            background-repeat: no-repeat;
-            background-size: 16px 12px;
-        }
-
-        .field-select:focus {
-            border-bottom-color: var(--blue);
-        }
-
-        .field-select option {
-            background: var(--white);
-            color: var(--text);
-        }
-
-        /* Textarea Styles */
-        .field-textarea {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid var(--border);
-            padding: 30px 0 12px 0;
-            font-size: 16px;
-            font-family: 'Inter', sans-serif;
-            color: var(--text);
-            outline: none;
             resize: vertical;
-            min-height: 100px;
-            line-height: 1.6;
-            transition: border-color 0.3s ease;
+            color: #0f172a !important;
         }
 
-        .field-textarea:focus {
-            border-bottom-color: var(--blue);
-        }
-
-        /* Label Styles */
-        .field-label {
-            position: absolute;
-            left: 0;
-            top: 30px;
-            font-size: 16px;
-            color: var(--text-muted);
-            font-family: 'Inter', sans-serif;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform-origin: left top;
-        }
-
-        /* Active/Focused Label States */
-        .field.active .field-label,
-        .field.has-value .field-label {
-            top: 0;
-            font-size: 12px;
-            color: var(--blue);
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        /* Textarea specific placeholder */
-        .textarea-placeholder {
-            position: absolute;
-            top: 55px;
-            left: 0;
-            right: 0;
-            font-size: 14px;
-            color: #94a3b8;
-            font-style: italic;
+        .form-group textarea {
             line-height: 1.5;
+            min-height: 60px;
+            overflow: hidden;
+            resize: vertical;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            font-size: 16px;
+            color: #64748b !important;
             pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
+            font-weight: 400;
         }
 
-        .textarea-placeholder.visible {
-            opacity: 1;
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-bottom-color: #2563eb !important;
         }
 
-        /* Submit Button */
-        .submit-button {
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group input:valid + label,
+        .form-group select:focus + label,
+        .form-group select:not([value=""]) + label,
+        .form-group select:valid + label,
+        .form-group textarea:focus + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            top: -10px;
+            font-size: 12px;
+            color: #2563eb !important;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .submit-btn {
             grid-column: 1 / -1;
-            margin-top: 40px;
-            padding: 22px 60px;
-            background: var(--blue);
-            color: var(--white);
+            margin-top: 60px;
+            padding: 20px 60px;
+            background: #2563eb !important;
+            color: #ffffff !important;
             border: none;
             font-size: 13px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
+            transition: all 0.3s ease;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        .submit-button:hover {
-            background: var(--blue-dark);
+        .submit-btn:hover {
+            background: #1e40af !important;
             transform: translateY(-2px);
-        }
-
-        .submit-button:active {
-            transform: translateY(0);
-        }
-
-        .submit-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
         }
 
         /* Loading Screen */
@@ -789,28 +683,34 @@
             transform: translateY(100%);
         }
 
-        /* Text Highlighting Animation */
+        /* Text Highlighting Animation - COMPLETELY REDONE */
         .text-highlight {
             position: relative;
             display: inline;
+            z-index: 1;
         }
 
         .text-highlight::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, #fef08a 0%, #facc15 100%);
-            transform: scaleX(0);
+            bottom: 2px;
+            left: -2px;
+            right: -2px;
+            height: 45%;
+            background: rgba(250, 204, 21, 0.4);
             transform-origin: left center;
+            transform: scaleX(0);
             z-index: -1;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .text-highlight.active::before {
-            transform: scaleX(1);
+            animation: highlightReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes highlightReveal {
+            to {
+                transform: scaleX(1);
+            }
         }
 
         /* Responsive */
@@ -818,9 +718,9 @@
             .cursor, .cursor-dot { display: none; }
             * { cursor: auto !important; }
             
-            .application-form {
+            .form {
                 grid-template-columns: 1fr;
-                gap: 50px;
+                gap: 40px;
             }
             
             .card {
@@ -875,13 +775,8 @@
     <div class="cursor"></div>
     <div class="cursor-dot"></div>
 
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress">
-        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-    </div>
-
     <!-- Navigation -->
-    <nav class="nav" id="navigation">
+    <nav class="nav">
         <div class="logo">New Bridge Living</div>
         <div class="nav-menu">
             <a href="#journey" class="nav-link">Journey</a>
@@ -912,7 +807,7 @@
             
             <div class="bridge-text">
                 <h2>Building Bridges</h2>
-                <p>Recovery is a journey from where you are to <span class="text-highlight" data-text="where you want to be"><span class="highlight-bg"></span>where you want to be</span>. We're here to help you build that bridge with <span class="text-highlight" data-text="intention, support, and hope"><span class="highlight-bg"></span>intention, support, and hope</span>.</p>
+                <p>Recovery is a journey from where you are to <span class="text-highlight">where you want to be</span>. We're here to help you build that bridge with <span class="text-highlight">intention, support, and hope</span>.</p>
             </div>
         </div>
     </section>
@@ -997,7 +892,7 @@
                     <div class="card-number">03 / Development</div>
                     <h3 class="card-title">Personal Development</h3>
                     <p class="card-text">Individual and group experiences designed to help you discover your authentic self. Explore your interests, develop new skills, and build unshakeable confidence.</p>
-                    </div>
+                </div>
                 <div class="card" data-card="4">
                     <div class="card-number">04 / Planning</div>
                     <h3 class="card-title">Future Planning</h3>
@@ -1027,47 +922,38 @@
                 <h2>Ready to Begin?</h2>
                 <p>Join our founding community. Opening Fall 2025.</p>
             </div>
-            
-            <form class="application-form" id="applicationForm">
-                <div class="field">
-                    <input type="text" class="field-input" id="firstName" required>
-                    <label for="firstName" class="field-label">First Name</label>
+            <form class="form" id="application-form">
+                <div class="form-group">
+                    <input type="text" placeholder=" " id="firstName" required>
+                    <label for="firstName">First Name</label>
                 </div>
-                
-                <div class="field">
-                    <input type="text" class="field-input" id="lastName" required>
-                    <label for="lastName" class="field-label">Last Name</label>
+                <div class="form-group">
+                    <input type="text" placeholder=" " id="lastName" required>
+                    <label for="lastName">Last Name</label>
                 </div>
-                
-                <div class="field">
-                    <input type="email" class="field-input" id="email" required>
-                    <label for="email" class="field-label">Email Address</label>
+                <div class="form-group">
+                    <input type="email" placeholder=" " id="email" required>
+                    <label for="email">Email Address</label>
                 </div>
-                
-                <div class="field">
-                    <input type="tel" class="field-input" id="phone" required>
-                    <label for="phone" class="field-label">Phone Number</label>
+                <div class="form-group">
+                    <input type="tel" placeholder=" " id="phone" required>
+                    <label for="phone">Phone Number</label>
                 </div>
-                
-                <div class="field full-width">
-                    <select class="field-select" id="sobriety" required>
-                        <option value="" disabled selected></option>
+                <div class="form-group full">
+                    <select id="sobriety" required>
+                        <option value="">Select your current sobriety length</option>
                         <option value="0-30">0-30 days</option>
                         <option value="30-90">30-90 days</option>
                         <option value="90-180">3-6 months</option>
                         <option value="180-365">6-12 months</option>
                         <option value="365+">1+ years</option>
                     </select>
-                    <label for="sobriety" class="field-label">Current sobriety length</label>
                 </div>
-                
-                <div class="field full-width">
-                    <textarea class="field-textarea" id="dreams" required></textarea>
-                    <label for="dreams" class="field-label">What are your dreams for your future?</label>
-                    <div class="textarea-placeholder">Share your vision for your future - career goals, relationships, experiences you want to have, or the life you are working toward building...</div>
+                <div class="form-group full">
+                    <textarea id="dreams" rows="4" placeholder=" " required></textarea>
+                    <label for="dreams">What are your dreams for your future?</label>
                 </div>
-                
-                <button type="submit" class="submit-button">Submit Application</button>
+                <button type="submit" class="submit-btn">Submit Application</button>
             </form>
         </div>
     </section>
@@ -1075,10 +961,6 @@
     <script>
         // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
-
-        // Prevent scrolling during loading and ensure we start at top
-        document.body.classList.add('loading');
-        window.scrollTo(0, 0);
 
         // Custom Cursor
         const cursor = document.querySelector('.cursor');
@@ -1113,38 +995,6 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
-        // Navigation scroll fade effect
-        let lastScrollY = window.scrollY;
-        let ticking = false;
-
-        function updateNavigation() {
-            const navigation = document.getElementById('navigation');
-            const currentScrollY = window.scrollY;
-            
-            if (currentScrollY < 100) {
-                // At top of page - show nav
-                navigation.classList.remove('hidden');
-            } else if (currentScrollY > lastScrollY && currentScrollY > 200) {
-                // Scrolling down and past threshold - hide nav
-                navigation.classList.add('hidden');
-            } else if (currentScrollY < lastScrollY) {
-                // Scrolling up - show nav
-                navigation.classList.remove('hidden');
-            }
-            
-            lastScrollY = currentScrollY;
-            ticking = false;
-        }
-
-        function requestNavUpdate() {
-            if (!ticking) {
-                requestAnimationFrame(updateNavigation);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', requestNavUpdate);
-
         // Loading Animation
         window.addEventListener('load', () => {
             const loaderSpans = document.querySelectorAll('.loader-text span');
@@ -1168,10 +1018,7 @@
                     duration: 0.5,
                     onComplete: () => {
                         document.querySelector('.loader').style.display = 'none';
-                        document.body.classList.remove('loading'); // Re-enable scrolling
-                        window.scrollTo(0, 0); // Ensure we're at top
                         initAnimations();
-                        initScrollProgress(); // Initialize scroll progress bar
                     }
                 });
         });
@@ -1224,7 +1071,15 @@
                 .to('.bridge-text p', {
                     opacity: 1,
                     y: 0,
-                    duration: 0.6
+                    duration: 0.6,
+                    onComplete: () => {
+                        // Trigger highlight animations after text appears
+                        document.querySelectorAll('.bridge-text .text-highlight').forEach((el, i) => {
+                            setTimeout(() => {
+                                el.classList.add('active');
+                            }, 200 + (i * 300));
+                        });
+                    }
                 }, 0.7);
 
             // Journey Text Reveal
@@ -1365,31 +1220,12 @@
                 })
                 .to({}, { duration: 0.8 }); // Much longer hold to ensure full animation and show period
 
-            // Text Highlighting on Scroll
-            const highlights = gsap.utils.toArray('.text-highlight');
-            
-            highlights.forEach((highlight) => {
-                ScrollTrigger.create({
-                    trigger: highlight,
-                    start: 'top 80%',
-                    onEnter: () => {
-                        // Add a slight delay for more natural feel
-                        gsap.delayedCall(0.3, () => {
-                            highlight.classList.add('active');
-                        });
-                    },
-                    onLeaveBack: () => {
-                        highlight.classList.remove('active');
-                    }
-                });
-            });
-
             // Form Animation
             ScrollTrigger.create({
                 trigger: '.application',
                 start: 'top center',
                 onEnter: () => {
-                    gsap.from('.field', {
+                    gsap.from('.form-group', {
                         opacity: 0,
                         y: 30,
                         duration: 0.8,
@@ -1398,9 +1234,6 @@
                     });
                 }
             });
-
-            // Initialize form interactions
-            initFormInteractions();
 
             // Smooth scroll for navigation
             document.querySelectorAll('.nav-link').forEach(link => {
@@ -1412,123 +1245,26 @@
                     }
                 });
             });
-        }
-
-        function initFormInteractions() {
-            const fields = document.querySelectorAll('.field');
-            const textareaField = document.querySelector('.field:has(.field-textarea)');
-            const textarea = document.getElementById('dreams');
-            const placeholder = document.querySelector('.textarea-placeholder');
-
-            // Handle all form fields
-            fields.forEach(field => {
-                const input = field.querySelector('.field-input, .field-select, .field-textarea');
-                
-                if (!input) return;
-
-                const updateFieldState = () => {
-                    const hasValue = input.value.trim() !== '';
-                    const isFocused = document.activeElement === input;
-                    
-                    field.classList.toggle('active', isFocused);
-                    field.classList.toggle('has-value', hasValue);
-                };
-
-                input.addEventListener('focus', updateFieldState);
-                input.addEventListener('blur', updateFieldState);
-                input.addEventListener('input', updateFieldState);
-                input.addEventListener('change', updateFieldState);
-
-                // Initial state
-                updateFieldState();
-            });
-
-            // Special handling for textarea placeholder
-            if (textarea && placeholder) {
-                const updatePlaceholder = () => {
-                    const isEmpty = textarea.value.trim() === '';
-                    const isFocused = document.activeElement === textarea;
-                    const textareaField = textarea.closest('.field');
-                    const labelIsUp = textareaField.classList.contains('active') || textareaField.classList.contains('has-value');
-                    
-                    // Only show placeholder when field is empty, not focused, and after user has interacted
-                    placeholder.classList.toggle('visible', isEmpty && !isFocused && labelIsUp);
-                };
-
-                textarea.addEventListener('focus', updatePlaceholder);
-                textarea.addEventListener('blur', updatePlaceholder);
-                textarea.addEventListener('input', updatePlaceholder);
-                
-                // Delay initial state to ensure proper setup
-                setTimeout(updatePlaceholder, 100);
-            }
 
             // Form submission
-            document.getElementById('applicationForm').addEventListener('submit', async (e) => {
+            document.querySelector('#application-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 
-                const submitBtn = document.querySelector('.submit-button');
-                const originalText = submitBtn.textContent;
+                const btn = document.querySelector('.submit-btn');
+                btn.textContent = 'SENDING...';
                 
-                submitBtn.textContent = 'SENDING...';
-                submitBtn.disabled = true;
-                
-                // Simulate submission
                 setTimeout(() => {
-                    submitBtn.textContent = 'THANK YOU';
-                    submitBtn.style.background = '#10b981';
+                    btn.textContent = 'THANK YOU';
+                    btn.style.background = '#10b981';
                     
                     setTimeout(() => {
                         alert('Thank you for your application. We will be in touch soon.');
-                        
-                        // Reset form
                         e.target.reset();
-                        
-                        // Reset all field states
-                        fields.forEach(field => {
-                            field.classList.remove('active', 'has-value');
-                        });
-                        
-                        // Reset placeholder
-                        if (placeholder) {
-                            placeholder.classList.add('visible');
-                        }
-                        
-                        // Reset button
-                        submitBtn.textContent = originalText;
-                        submitBtn.style.background = '';
-                        submitBtn.disabled = false;
+                        btn.textContent = 'SUBMIT APPLICATION';
+                        btn.style.background = '';
                     }, 1500);
                 }, 2000);
             });
-        }
-
-        // Scroll Progress Bar
-        function initScrollProgress() {
-            const progressBar = document.getElementById('scrollProgressBar');
-            
-            function updateScrollProgress() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrollProgress = (scrollTop / scrollHeight) * 100;
-                
-                progressBar.style.width = Math.min(scrollProgress, 100) + '%';
-            }
-            
-            // Throttled scroll listener for better performance
-            let ticking = false;
-            function requestScrollUpdate() {
-                if (!ticking) {
-                    requestAnimationFrame(updateScrollProgress);
-                    ticking = true;
-                    setTimeout(() => { ticking = false; }, 10);
-                }
-            }
-            
-            window.addEventListener('scroll', requestScrollUpdate);
-            
-            // Initial update
-            updateScrollProgress();
         }
 
         // Refresh ScrollTrigger on resize
