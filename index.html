@@ -922,25 +922,25 @@
                 <h2>Ready to Begin?</h2>
                 <p>Join our founding community. Opening Fall 2025.</p>
             </div>
-            <form class="form" action="https://docs.google.com/forms/d/e/1FAIpQLSf4st4OXtrCPwTSlJt55AIHAsKVffkWU4oPohuUutoHrv-C2g/formResponse" method="POST" target="hidden_iframe">
+            <form class="form" id="application-form">
                 <div class="form-group">
-                    <input type="text" placeholder=" " name="entry.821005925" id="firstName" required>
+                    <input type="text" placeholder=" " id="firstName" required>
                     <label for="firstName">First Name</label>
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder=" " name="entry.2012435742" id="lastName" required>
+                    <input type="text" placeholder=" " id="lastName" required>
                     <label for="lastName">Last Name</label>
                 </div>
                 <div class="form-group">
-                    <input type="email" placeholder=" " name="entry.486195769" id="email" required>
+                    <input type="email" placeholder=" " id="email" required>
                     <label for="email">Email Address</label>
                 </div>
                 <div class="form-group">
-                    <input type="tel" placeholder=" " name="entry.379777242" id="phone" required>
+                    <input type="tel" placeholder=" " id="phone" required>
                     <label for="phone">Phone Number</label>
                 </div>
                 <div class="form-group full">
-                    <select name="entry.876884470" id="sobriety" required>
+                    <select id="sobriety" required>
                         <option value="">Select your current sobriety length</option>
                         <option value="0-30 days">0-30 days</option>
                         <option value="30-90 days">30-90 days</option>
@@ -950,14 +950,11 @@
                     </select>
                 </div>
                 <div class="form-group full">
-                    <textarea name="entry.100236057" id="dreams" rows="4" placeholder=" " required></textarea>
+                    <textarea id="dreams" rows="4" placeholder=" " required></textarea>
                     <label for="dreams">What are your dreams for your future?</label>
                 </div>
                 <button type="submit" class="submit-btn">Submit Application</button>
             </form>
-
-            <!-- Hidden iframe to capture the response -->
-            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
         </div>
     </section>
 
@@ -1250,8 +1247,10 @@
             });
 
             // Form submission to Google Forms - Fixed approach
-            // Form submission to Google Forms with custom styling
-            document.querySelector('.form').addEventListener('submit', function(e) {
+            // Custom form submission to our API
+            document.querySelector('#application-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
                 const btn = document.querySelector('.submit-btn');
                 const originalText = btn.textContent;
 
@@ -1260,21 +1259,51 @@
                 btn.disabled = true;
                 btn.style.background = '#6b7280';
 
-                // Set up success handler
-                document.getElementById('hidden_iframe').onload = function() {
-                    if(btn.textContent === 'SENDING...') {
+                // Get form data
+                const formData = {
+                    firstName: document.getElementById('firstName').value.trim(),
+                    lastName: document.getElementById('lastName').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    sobriety: document.getElementById('sobriety').value,
+                    dreams: document.getElementById('dreams').value.trim()
+                };
+
+                try {
+                    const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (response.ok) {
+                        // Success
                         btn.textContent = 'THANK YOU!';
                         btn.style.background = '#10b981';
 
                         setTimeout(() => {
                             alert('Thank you for your application. We will be in touch soon.');
-                            document.querySelector('.form').reset();
+                            document.querySelector('#application-form').reset();
                             btn.textContent = originalText;
                             btn.style.background = '';
                             btn.disabled = false;
                         }, 2000);
+                    } else {
+                        throw new Error('Submission failed');
                     }
-                };
+                } catch (error) {
+                    console.error('Error:', error);
+                    btn.textContent = 'ERROR - TRY AGAIN';
+                    btn.style.background = '#ef4444';
+
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 3000);
+                }
             });
         }
 

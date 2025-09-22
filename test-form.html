@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Form Test</title>
+</head>
+<body>
+    <h1>Test Google Form Submission</h1>
+
+    <!-- Direct form that submits to your Google Form -->
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSf4st4OXtrCPwTSlJt55AIHAsKVffkWU4oPohuUutoHrv-C2g/formResponse" method="POST" target="hidden_iframe">
+        <p>First Name: <input type="text" name="entry.821005925" value="Test" required></p>
+        <p>Last Name: <input type="text" name="entry.2012435742" value="User" required></p>
+        <p>Email: <input type="email" name="entry.486195769" value="test@example.com" required></p>
+        <p>Phone: <input type="tel" name="entry.379777242" value="555-123-4567" required></p>
+        <p>Sobriety Length:
+            <select name="entry.876884470" required>
+                <option value="0-30 days">0-30 days</option>
+                <option value="30-90 days" selected>30-90 days</option>
+                <option value="3-6 months">3-6 months</option>
+                <option value="6-12 months">6-12 months</option>
+                <option value="1+ years">1+ years</option>
+            </select>
+        </p>
+        <p>Dreams: <textarea name="entry.100236057" required>Test dreams for the future</textarea></p>
+        <p><input type="submit" value="Test Submit"></p>
+    </form>
+
+    <!-- Hidden iframe to capture the response -->
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+    <script>
+        // Show alert when form submits
+        document.querySelector('form').addEventListener('submit', function() {
+            setTimeout(() => {
+                alert('Form submitted! Check your Google Form responses.');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

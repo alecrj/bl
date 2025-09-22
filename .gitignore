@@ -19,3 +19,8 @@ pids
 *.pid
 *.seed
 *.pid.lock
+
+# Environment variables
+.env.local
+.env
+.vercel
