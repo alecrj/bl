@@ -681,6 +681,7 @@
             cursor: auto !important;
         }
         .thank-you-modal {
+            position: relative;
             background: white;
             border-radius: 20px;
             padding: 60px 40px;
@@ -722,24 +723,31 @@
             font-size: 1.1rem;
             color: #64748b;
             line-height: 1.6;
-            margin-bottom: 40px;
+            margin-bottom: 0;
             font-family: 'Inter', sans-serif;
         }
         .thank-you-close {
-            background: #2563eb;
-            color: white;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: #f1f5f9;
             border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            color: #64748b;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .thank-you-close:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
+            background: #e2e8f0;
+            color: #334155;
+            transform: scale(1.1);
         }
         @keyframes scaleIn {
             from {
@@ -1056,10 +1064,10 @@
     <!-- Thank You Modal -->
     <div class="thank-you-overlay" id="thankYouModal">
         <div class="thank-you-modal">
+            <button class="thank-you-close" onclick="closeThankYouModal()">×</button>
             <div class="thank-you-icon"></div>
             <h3 class="thank-you-title">Thank You!</h3>
             <p class="thank-you-message">Your application has been submitted successfully. We'll be in touch with you soon to discuss the next steps on your journey with New Bridge Living.</p>
-            <button class="thank-you-close" onclick="closeThankYouModal()">Continue</button>
         </div>
     </div>
 
