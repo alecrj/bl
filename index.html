@@ -922,39 +922,9 @@
                 <h2>Ready to Begin?</h2>
                 <p>Join our founding community. Opening Fall 2025.</p>
             </div>
-            <form class="form" id="application-form">
-                <div class="form-group">
-                    <input type="text" placeholder=" " id="firstName" required>
-                    <label for="firstName">First Name</label>
-                </div>
-                <div class="form-group">
-                    <input type="text" placeholder=" " id="lastName" required>
-                    <label for="lastName">Last Name</label>
-                </div>
-                <div class="form-group">
-                    <input type="email" placeholder=" " id="email" required>
-                    <label for="email">Email Address</label>
-                </div>
-                <div class="form-group">
-                    <input type="tel" placeholder=" " id="phone" required>
-                    <label for="phone">Phone Number</label>
-                </div>
-                <div class="form-group full">
-                    <select id="sobriety" required>
-                        <option value="">Select your current sobriety length</option>
-                        <option value="0-30 days">0-30 days</option>
-                        <option value="30-90 days">30-90 days</option>
-                        <option value="3-6 months">3-6 months</option>
-                        <option value="6-12 months">6-12 months</option>
-                        <option value="1+ years">1+ years</option>
-                    </select>
-                </div>
-                <div class="form-group full">
-                    <textarea id="dreams" rows="4" placeholder=" " required></textarea>
-                    <label for="dreams">What are your dreams for your future?</label>
-                </div>
-                <button type="submit" class="submit-btn">Submit Application</button>
-            </form>
+            <div class="embedded-form">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf4st4OXtrCPwTSlJt55AIHAsKVffkWU4oPohuUutoHrv-C2g/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
         </div>
     </section>
 
@@ -1247,69 +1217,7 @@
             });
 
             // Form submission to Google Forms - Fixed approach
-            document.querySelector('#application-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-
-                const btn = document.querySelector('.submit-btn');
-                const originalText = btn.textContent;
-                btn.textContent = 'SENDING...';
-                btn.disabled = true;
-
-                // Validate required fields
-                const firstName = document.getElementById('firstName').value.trim();
-                const lastName = document.getElementById('lastName').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-                const sobriety = document.getElementById('sobriety').value;
-                const dreams = document.getElementById('dreams').value.trim();
-
-                if (!firstName || !lastName || !email || !phone || !sobriety || !dreams) {
-                    alert('Please fill in all required fields.');
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                    return;
-                }
-
-                // Use fetch to submit to Google Forms
-                const formData = new FormData();
-                formData.append('entry.821005925', firstName);
-                formData.append('entry.2012435742', lastName);
-                formData.append('entry.486195769', email);
-                formData.append('entry.379777242', phone);
-                formData.append('entry.876884470', sobriety);
-                formData.append('entry.100236057', dreams);
-
-                console.log('Submitting form data:', {
-                    firstName, lastName, email, phone, sobriety, dreams
-                });
-
-                fetch('https://docs.google.com/forms/d/e/1FAIpQLSf4st4OXtrCPwTSlJt55AIHAsKVffkWU4oPohuUutoHrv-C2g/formResponse', {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'no-cors'
-                }).then(() => {
-                    console.log('Form submitted successfully');
-                    // Success (no-cors means we can't read response, but it sends)
-                    btn.textContent = 'THANK YOU!';
-                    btn.style.background = '#10b981';
-                    setTimeout(() => {
-                        alert('Thank you for your application. We will be in touch soon.');
-                        e.target.reset();
-                        btn.textContent = originalText;
-                        btn.style.background = '';
-                        btn.disabled = false;
-                    }, 1500);
-                }).catch((error) => {
-                    console.error('Error submitting form:', error);
-                    btn.textContent = 'ERROR - TRY AGAIN';
-                    btn.style.background = '#ef4444';
-                    setTimeout(() => {
-                        btn.textContent = originalText;
-                        btn.style.background = '';
-                        btn.disabled = false;
-                    }, 2000);
-                });
-            });
+            // Form submission removed - using embedded Google Form
         }
 
         // Refresh ScrollTrigger on resize
