@@ -1348,8 +1348,8 @@
             });
 
             // Form submission to Google Forms - Fixed approach
-            // Custom form submission to our API
-            document.querySelector('#application-form').addEventListener('submit', async function(e) {
+            // Demo form submission - just shows thank you modal
+            document.querySelector('#application-form').addEventListener('submit', function(e) {
                 e.preventDefault();
 
                 const btn = document.querySelector('.submit-btn');
@@ -1360,51 +1360,19 @@
                 btn.disabled = true;
                 btn.style.background = '#6b7280';
 
-                // Get form data
-                const formData = {
-                    firstName: document.getElementById('firstName').value.trim(),
-                    lastName: document.getElementById('lastName').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    phone: document.getElementById('phone').value.trim(),
-                    sobriety: document.getElementById('sobriety').value,
-                    dreams: document.getElementById('dreams').value.trim()
-                };
-
-                try {
-                    const response = await fetch('/api/contact', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                    });
-
-                    if (response.ok) {
-                        // Success
-                        btn.textContent = 'THANK YOU!';
-                        btn.style.background = '#10b981';
-
-                        setTimeout(() => {
-                            showThankYouModal();
-                            document.querySelector('#application-form').reset();
-                            btn.textContent = originalText;
-                            btn.style.background = '';
-                            btn.disabled = false;
-                        }, 1000);
-                    } else {
-                        throw new Error('Submission failed');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    btn.textContent = 'ERROR - TRY AGAIN';
-                    btn.style.background = '#ef4444';
+                // Simulate sending for demo
+                setTimeout(() => {
+                    btn.textContent = 'THANK YOU!';
+                    btn.style.background = '#10b981';
 
                     setTimeout(() => {
+                        showThankYouModal();
+                        document.querySelector('#application-form').reset();
                         btn.textContent = originalText;
                         btn.style.background = '';
                         btn.disabled = false;
-                    }, 3000);
-                }
+                    }, 800);
+                }, 1000);
             });
 
             // Thank you modal functions
