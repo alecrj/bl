@@ -1270,62 +1270,45 @@
                     return;
                 }
 
-                // Create invisible iframe
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.name = 'google_form_iframe';
-                document.body.appendChild(iframe);
+                // Use fetch to submit to Google Forms
+                const formData = new FormData();
+                formData.append('entry.821005925', firstName);
+                formData.append('entry.2012435742', lastName);
+                formData.append('entry.486195769', email);
+                formData.append('entry.379777242', phone);
+                formData.append('entry.876884470', sobriety);
+                formData.append('entry.100236057', dreams);
 
-                // Create hidden form
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSf4st4OXtrCPwTSlJt55AIHAsKVffkWU4oPohuUutoHrv-C2g/formResponse';
-                form.target = 'google_form_iframe';
-                form.style.display = 'none';
-
-                // Add all the form data
-                const formData = {
-                    'entry.821005925': firstName,
-                    'entry.2012435742': lastName,
-                    'entry.486195769': email,
-                    'entry.379777242': phone,
-                    'entry.876884470': sobriety,
-                    'entry.100236057': dreams
-                };
-
-                // Create inputs for each field
-                Object.keys(formData).forEach(name => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = name;
-                    input.value = formData[name];
-                    form.appendChild(input);
+                console.log('Submitting form data:', {
+                    firstName, lastName, email, phone, sobriety, dreams
                 });
 
-                document.body.appendChild(form);
-
-                // Handle iframe load (success/error)
-                iframe.onload = function() {
+                fetch('https://docs.google.com/forms/d/e/1FAIpQLSf4st4OXtrCPwTSlJt55AIHAsKVffkWU4oPohuUutoHrv-C2g/formResponse', {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                }).then(() => {
+                    console.log('Form submitted successfully');
+                    // Success (no-cors means we can't read response, but it sends)
+                    btn.textContent = 'THANK YOU!';
+                    btn.style.background = '#10b981';
                     setTimeout(() => {
-                        btn.textContent = 'THANK YOU!';
-                        btn.style.background = '#10b981';
-
-                        setTimeout(() => {
-                            alert('Thank you for your application. We will be in touch soon.');
-                            e.target.reset();
-                            btn.textContent = originalText;
-                            btn.style.background = '';
-                            btn.disabled = false;
-
-                            // Cleanup
-                            document.body.removeChild(form);
-                            document.body.removeChild(iframe);
-                        }, 2000);
-                    }, 500);
-                };
-
-                // Submit the form
-                form.submit();
+                        alert('Thank you for your application. We will be in touch soon.');
+                        e.target.reset();
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 1500);
+                }).catch((error) => {
+                    console.error('Error submitting form:', error);
+                    btn.textContent = 'ERROR - TRY AGAIN';
+                    btn.style.background = '#ef4444';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 2000);
+                });
             });
         }
 
