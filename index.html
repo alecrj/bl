@@ -53,7 +53,7 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10001;
             transition: all 0.1s ease;
             transform: translate(-50%, -50%);
             mix-blend-mode: difference;
@@ -66,7 +66,7 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 10000;
+            z-index: 10002;
             transform: translate(-50%, -50%);
         }
 
@@ -675,6 +675,10 @@
         .thank-you-overlay.show {
             opacity: 1;
             visibility: visible;
+            cursor: auto;
+        }
+        .thank-you-overlay.show * {
+            cursor: auto !important;
         }
         .thank-you-modal {
             background: white;
