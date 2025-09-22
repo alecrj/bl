@@ -1246,43 +1246,86 @@
                 });
             });
 
-            // Form submission - Direct redirect to Google Forms
+            // Form submission to Google Forms - Fixed approach
             document.querySelector('#application-form').addEventListener('submit', (e) => {
                 e.preventDefault();
 
                 const btn = document.querySelector('.submit-btn');
-                btn.textContent = 'REDIRECTING...';
+                const originalText = btn.textContent;
+                btn.textContent = 'SENDING...';
                 btn.disabled = true;
 
-                // Build Google Forms URL with pre-filled data
-                const baseUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSf4st4OXtrCPwTSlJt55AIHAsKVffkWU4oPohuUutoHrv-C2g/formResponse';
+                // Validate required fields
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const sobriety = document.getElementById('sobriety').value;
+                const dreams = document.getElementById('dreams').value.trim();
 
-                const params = new URLSearchParams({
-                    'entry.821005925': document.getElementById('firstName').value,
-                    'entry.2012435742': document.getElementById('lastName').value,
-                    'entry.486195769': document.getElementById('email').value,
-                    'entry.379777242': document.getElementById('phone').value,
-                    'entry.876884470': document.getElementById('sobriety').value,
-                    'entry.100236057': document.getElementById('dreams').value,
-                    'submit': 'Submit'
+                if (!firstName || !lastName || !email || !phone || !sobriety || !dreams) {
+                    alert('Please fill in all required fields.');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+
+                // Create invisible iframe
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.name = 'google_form_iframe';
+                document.body.appendChild(iframe);
+
+                // Create hidden form
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'https://docs.google.com/forms/d/e/1FAIpQLSf4st4OXtrCPwTSlJt55AIHAsKVffkWU4oPohuUutoHrv-C2g/formResponse';
+                form.target = 'google_form_iframe';
+                form.style.display = 'none';
+
+                // Add all the form data
+                const formData = {
+                    'entry.821005925': firstName,
+                    'entry.2012435742': lastName,
+                    'entry.486195769': email,
+                    'entry.379777242': phone,
+                    'entry.876884470': sobriety,
+                    'entry.100236057': dreams
+                };
+
+                // Create inputs for each field
+                Object.keys(formData).forEach(name => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    input.value = formData[name];
+                    form.appendChild(input);
                 });
 
-                // Open in new tab, then show success message
-                window.open(baseUrl + '?' + params.toString(), '_blank');
+                document.body.appendChild(form);
 
-                // Show success message
-                setTimeout(() => {
-                    btn.textContent = 'SUBMITTED!';
-                    btn.style.background = '#10b981';
-
+                // Handle iframe load (success/error)
+                iframe.onload = function() {
                     setTimeout(() => {
-                        alert('Form opened in new tab. Please complete the submission there.\n\nThis ensures your information is properly received.');
-                        e.target.reset();
-                        btn.textContent = 'SUBMIT APPLICATION';
-                        btn.style.background = '';
-                        btn.disabled = false;
-                    }, 1500);
-                }, 500);
+                        btn.textContent = 'THANK YOU!';
+                        btn.style.background = '#10b981';
+
+                        setTimeout(() => {
+                            alert('Thank you for your application. We will be in touch soon.');
+                            e.target.reset();
+                            btn.textContent = originalText;
+                            btn.style.background = '';
+                            btn.disabled = false;
+
+                            // Cleanup
+                            document.body.removeChild(form);
+                            document.body.removeChild(iframe);
+                        }, 2000);
+                    }, 500);
+                };
+
+                // Submit the form
+                form.submit();
             });
         }
 
